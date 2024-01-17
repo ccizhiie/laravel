@@ -2,64 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\c;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 
 class KaryawanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $karyawans = Karyawan::all();
+        return view('karyawan.index', compact('karyawans'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('karyawan.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Nama' => 'required|string',
+            'NomorKaryawan' => 'nullable|string',
+            'Jabatan' => 'nullable|string',
+        ]);
+
+        Karyawan::create($request->all());
+
+        return redirect()->route('karyawan.index')->with('success', 'Karyawan created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(c $c)
+    public function edit(Karyawan $karyawan)
     {
-        //
+        return view('karyawan.edit', compact('karyawan'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(c $c)
+    public function update(Request $request, Karyawan $karyawan)
     {
-        //
+        $request->validate([
+            'Nama' => 'required|string',
+            'NomorKaryawan' => 'nullable|string',
+            'Jabatan' => 'nullable|string',
+        ]);
+
+        $karyawan->update($request->all());
+
+        return redirect()->route('karyawan.index')->with('success', 'Karyawan updated successfully!');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, c $c)
+    public function destroy(Karyawan $karyawan)
     {
-        //
-    }
+        $karyawan->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(c $c)
-    {
-        //
+        return redirect()->route('karyawan.index')->with('success', 'Karyawan deleted successfully!');
     }
 }
