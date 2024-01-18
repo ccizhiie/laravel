@@ -1,58 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use App\Models\Karyawan;
-use Illuminate\Http\Request;
-
-class KaryawanController extends Controller
+class CreateKaryawanTable extends Migration
 {
-    public function index()
+    public function up()
     {
-        $karyawans = Karyawan::all();
-        return view('karyawan.index', compact('karyawans'));
+        Schema::create('karyawan', function (Blueprint $table) {
+            $table->id('KaryawanID');
+            $table->string('Nama')->nullable();
+            $table->string('NomorKaryawan')->nullable();
+            $table->string('Jabatan')->nullable();
+            $table->timestamps();
+        });
     }
 
-    public function create()
+    public function down()
     {
-        return view('karyawan.create');
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'Nama' => 'required|string',
-            'NomorKaryawan' => 'nullable|string',
-            'Jabatan' => 'nullable|string',
-        ]);
-
-        Karyawan::create($request->all());
-
-        return redirect()->route('karyawan.index')->with('success', 'Karyawan created successfully!');
-    }
-
-    public function edit(Karyawan $karyawan)
-    {
-        return view('karyawan.edit', compact('karyawan'));
-    }
-
-    public function update(Request $request, Karyawan $karyawan)
-    {
-        $request->validate([
-            'Nama' => 'required|string',
-            'NomorKaryawan' => 'nullable|string',
-            'Jabatan' => 'nullable|string',
-        ]);
-
-        $karyawan->update($request->all());
-
-        return redirect()->route('karyawan.index')->with('success', 'Karyawan updated successfully!');
-    }
-
-    public function destroy(Karyawan $karyawan)
-    {
-        $karyawan->delete();
-
-        return redirect()->route('karyawan.index')->with('success', 'Karyawan deleted successfully!');
+        Schema::dropIfExists('karyawan');
     }
 }
