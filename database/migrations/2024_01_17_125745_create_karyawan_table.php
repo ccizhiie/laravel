@@ -22,3 +22,4 @@ class CreateKaryawanTable extends Migration
         Schema::dropIfExists('karyawan');
     }
 }
+  
