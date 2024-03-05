@@ -9,13 +9,15 @@ class CreateAbsensiTable extends Migration
     public function up()
     {
         Schema::create('absensi', function (Blueprint $table) {
-            $table->id('AbsensiID');
-            $table->foreignId('KaryawanID')->constrained('karyawan', 'KaryawanID');
-            $table->date('Tanggal')->nullable();
-            $table->time('JamMasuk')->nullable();
-            $table->string('Status')->nullable();
-            $table->text('foto');
-            $table->timestamps();
+            $table->id();
+            $table->char('nisn');
+            $table->date('tgl_presensi');
+            $table->time('jam_in');
+            $table->time('jam_out');
+            $table->string('foto_in');
+            $table->string('foto_out');
+            $table->text('location_in');
+            $table->text('location_out');
         });
     }
 

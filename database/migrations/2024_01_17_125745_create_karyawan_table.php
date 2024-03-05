@@ -9,11 +9,13 @@ class CreateKaryawanTable extends Migration
     public function up()
     {
         Schema::create('karyawan', function (Blueprint $table) {
-            $table->id('KaryawanID');
-            $table->string('Nama')->nullable();
-            $table->string('NomorKaryawan')->nullable();
-            $table->string('Jabatan')->nullable();
-            $table->timestamps();
+            $table->char('nisn');
+            $table->string('nama_lengkap');
+            $table->string('jabatan');
+            $table->string('no_hp');
+            $table->string('foto');
+            $table->string('password');
+            $table->string('remember_token')->nullable;
         });
     }
 
